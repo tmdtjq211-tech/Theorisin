@@ -3,121 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ORIGIN - 감정 오일 테라피</title>
+    <title>THE ORIGIN | 감정 오일 테라피</title>
     <style>
         :root {
-            --primary-bg: #fdfaf5;
-            --accent-gold: #d4a373;
-            --text-main: #333;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --bg-color: #fcf9f5;
+            --card-white: #ffffff;
+            --point-color: #d4a373; /* 오일 느낌의 따뜻한 골드 */
+            --text-dark: #2d2d2d;
+            --text-light: #757575;
         }
         body {
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
         .container {
-            max-width: 480px;
-            width: 100%;
-            background: white;
-            padding: 25px;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
+            max-width: 450px;
+            margin: 0 auto;
         }
-        header { text-align: center; margin-bottom: 30px; }
-        header h1 { color: var(--accent-gold); font-size: 28px; margin: 10px 0; }
-        
-        .manual-box {
-            background: #fff9f0;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-gold);
+        header {
+            text-align: center;
+            padding: 20px 0 40px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--point-color);
+            margin: 0;
+        }
+        .subtitle {
             font-size: 14px;
-            margin-bottom: 25px;
+            color: var(--text-light);
+            margin-top: 5px;
         }
 
-        .step-info { font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; }
-        
-        /* 이미지 카드 그리드 */
+        /* 소개 박스 */
+        .intro-card {
+            background: var(--card-white);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 25px;
+        }
+        .intro-card h2 {
+            font-size: 18px;
+            margin-top: 0;
+            color: var(--point-color);
+        }
+        .intro-card p {
+            font-size: 14.5px;
+            margin-bottom: 0;
+            word-break: keep-all;
+        }
+
+        /* 오일 선택 그리드 */
+        .step-title {
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 15px;
+            display: block;
+            padding-left: 5px;
+        }
         .oil-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 30px;
         }
-        .oil-card {
-            background: #fff;
-            border: 2px solid #eee;
-            border-radius: 16px;
-            overflow: hidden;
+        .oil-item {
+            background: var(--card-white);
+            border: 2px solid transparent;
+            border-radius: 18px;
+            padding: 20px 10px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            position: relative;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
-        .oil-card img {
-            width: 100%;
-            height: auto;
+        .oil-item .icon {
+            font-size: 30px;
+            margin-bottom: 8px;
             display: block;
-            filter: grayscale(20%);
         }
-        .oil-card.selected {
-            border-color: var(--accent-gold);
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(212, 163, 115, 0.3);
+        .oil-item span {
+            font-weight: 600;
+            font-size: 15px;
         }
-        .oil-card.selected img { filter: grayscale(0%); }
-        .oil-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--accent-gold);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
+        .oil-item.selected {
+            border-color: var(--point-color);
+            background-color: #fffaf5;
+            transform: scale(0.98);
         }
 
-        button {
+        /* 분석 버튼 */
+        .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: var(--accent-gold);
+            background: var(--point-color);
             color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 18px;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            margin-bottom: 40px;
         }
-        button:hover { background: #bc8a5f; }
 
-        #result-section {
+        /* 결과 섹션 */
+        #result-area {
             display: none;
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 16px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            margin-bottom: 50px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-tag {
+            display: inline-block;
+            background: #f0e6dc;
+            color: #8d6e63;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .result-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .result-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* 하트레시피 연결 */
+        .next-step-box {
+            background: #fff0f0;
+            padding: 15px;
+            border-radius: 12px;
             text-align: center;
         }
-        .next-tool-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #eee;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #555;
+        .next-step-box strong { color: #e57373; }
+        .btn-heart {
+            display: block;
+            margin-top: 10px;
+            background: #f06292;
+            color: white;
             text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 15px;
         }
     </style>
 </head>
@@ -125,83 +173,91 @@
 
 <div class="container">
     <header>
-        <h1>THE ORIGIN</h1>
-        <p style="font-size: 14px; color: #888;">Emotion Oil Therapy Beta Test</p>
+        <p class="logo">THE ORIGIN</p>
+        <p class="subtitle">Emotion Oil Therapy Lab</p>
     </header>
 
-    <div class="manual-box">
-        <strong>[테스트 취지]</strong><br>
-        나에게 필요한 감정을 승화시켜주는 향을 찾는 과정입니다. 현재 가장 마음이 가는 향(카드)을 2가지 선택해주세요.
+    <div class="intro-card">
+        <h2>"향기는 감정의 통로입니다"</h2>
+        <p>
+            디 오리진은 당신의 현재 감정을 승화시켜줄 최적의 룸 스프레이를 개발하고 있습니다. 
+            사람은 신기하게도 <b>현재 나에게 가장 필요한 에너지를 가진 향</b>에 끌리게 되어 있습니다. 
+            지금 가장 마음이 가는 키워드 2가지를 선택해 주세요.
+        </p>
     </div>
 
-    <span class="step-info">STEP 1. 선호 감정 선택</span>
-    
+    <span class="step-title">STEP 1. 나를 끌어당기는 향기 선택</span>
     <div class="oil-grid">
-        <div class="oil-card" onclick="selectOil(this, '동기부여')">
-            <img src="https://i.ibb.co/XfqM9Yp/15644.jpg" alt="동기부여">
+        <div class="oil-item" onclick="toggleOil(this, '동기부여', '✨')">
+            <span class="icon">✨</span>
+            <span>동기부여</span>
         </div>
-        <div class="oil-card" onclick="selectOil(this, '편안함')">
-            <img src="https://i.ibb.co/YyYfG7Q/15642.jpg" alt="편안함">
+        <div class="oil-item" onclick="toggleOil(this, '편안함', '☁️')">
+            <span class="icon">☁️</span>
+            <span>편안함</span>
         </div>
-        <div class="oil-card" onclick="selectOil(this, '위로')">
-            <img src="https://i.ibb.co/f4R9zGz/15641.jpg" alt="위로">
+        <div class="oil-item" onclick="toggleOil(this, '위로', '🌿')">
+            <span class="icon">🌿</span>
+            <span>위로</span>
         </div>
-        <div class="oil-card" onclick="selectOil(this, '용기')">
-            <img src="https://i.ibb.co/qF4jPjR/15643.jpg" alt="용기">
+        <div class="oil-item" onclick="toggleOil(this, '용기', '🔥')">
+            <span class="icon">🔥</span>
+            <span>용기</span>
         </div>
-        <div class="oil-card" onclick="selectOil(this, '용서')">
-            <img src="https://i.ibb.co/zH8Xg2g/15645.jpg" alt="용서">
+        <div class="oil-item" onclick="toggleOil(this, '용서', '🌊')">
+            <span class="icon">🌊</span>
+            <span>용서</span>
         </div>
-        <div class="oil-card" onclick="selectOil(this, '격려')">
-            <img src="https://i.ibb.co/C2C9pWb/15640.jpg" alt="격려">
+        <div class="oil-item" onclick="toggleOil(this, '격려', '👍')">
+            <span class="icon">👍</span>
+            <span>격려</span>
         </div>
     </div>
 
-    <button onclick="generateResult()">베타테스트 분석하기</button>
+    <button class="btn-submit" onclick="showResult()">내 감정 오일 분석하기</button>
 
-    <div id="result-section">
-        <h3 style="color: var(--accent-gold); margin-bottom: 10px;">분석 결과</h3>
-        <p id="result-desc" style="line-height: 1.8;"></p>
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
-        <p style="font-size: 14px; color: #666;">심화 상담을 위해 아래 도구로 연결이 가능합니다.</p>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-            <a href="#" class="next-tool-link">#라이프스케치</a>
-            <a href="#" class="next-tool-link">#소통연구소</a>
-            <a href="#" class="next-tool-link">#하트레시피</a>
+    <div id="result-area">
+        <div class="result-tag">Beta Test 분석 결과</div>
+        <div class="result-title">나의 심리 에너지 흐름</div>
+        <p class="result-desc" id="result-text"></p>
+        
+        <div class="next-step-box">
+            <p style="margin: 0; font-size: 14px;">방금 느끼신 감정의 정확한 원인과<br>나만의 <b>[하트레시피]</b>가 궁금하신가요?</p>
+            <a href="#" class="btn-heart">❤️ 하트레시피로 심화 상담하기</a>
         </div>
     </div>
 </div>
 
 <script>
-    let selection = [];
+    let selected = [];
 
-    function selectOil(el, name) {
-        if (selection.includes(name)) {
-            selection = selection.filter(item => item !== name);
+    function toggleOil(el, name, emoji) {
+        if (selected.includes(name)) {
+            selected = selected.filter(i => i !== name);
             el.classList.remove('selected');
         } else {
-            if (selection.length < 2) {
-                selection.push(name);
+            if (selected.length < 2) {
+                selected.push(name);
                 el.classList.add('selected');
             } else {
-                alert("최대 2가지만 선택 가능합니다.");
+                alert("최대 2개까지만 선택 가능합니다.");
             }
         }
     }
 
-    function generateResult() {
-        if (selection.length < 1) {
-            alert("상담을 위해 최소 1개 이상의 카드를 선택해주세요.");
+    function showResult() {
+        if (selected.length === 0) {
+            alert("체험을 위해 향기를 선택해 주세요.");
             return;
         }
+
+        const resArea = document.getElementById('result-area');
+        const resText = document.getElementById('result-text');
         
-        const resSection = document.getElementById('result-section');
-        const resDesc = document.getElementById('result-desc');
+        resArea.style.display = 'block';
+        resText.innerHTML = `현재 <strong>${selected.join('와(과) ')}</strong>의 향에 반응하고 계시네요. <br><br>이 향기들은 당신의 무의식이 현재 가장 채우고 싶어 하는 심리적 결핍 혹은 지향점을 나타냅니다. 룸 스프레이를 통해 이 향을 맡는 것만으로도 해당 감정이 자연스럽게 승화되는 테라피 효과를 경험하실 수 있습니다.`;
         
-        resSection.style.display = 'block';
-        resDesc.innerHTML = `현재 <strong>[${selection.join('와(과) ')}]</strong>의 에너지가 가장 끌리는 상태시네요.<br>이것은 현재 심리적으로 해당 가치가 가장 필요하거나, 혹은 그 가치를 통해 에너지를 얻고 싶어 한다는 신호입니다.`;
-        
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        window.scrollTo({ top: resArea.offsetTop - 20, behavior: 'smooth' });
     }
 </script>
 
