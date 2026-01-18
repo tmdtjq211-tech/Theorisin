@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ORIGIN - 감정 오일 테라피</title>
+    <style>
+        :root {
+            --primary-bg: #fdfaf5;
+            --accent-gold: #d4a373;
+            --text-main: #333;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { color: var(--accent-gold); font-size: 28px; margin: 10px 0; }
+        
+        .manual-box {
+            background: #fff9f0;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-gold);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .step-info { font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; }
+        
+        /* 이미지 카드 그리드 */
+        .oil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .oil-card {
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+        }
+        .oil-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(20%);
+        }
+        .oil-card.selected {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(212, 163, 115, 0.3);
+        }
+        .oil-card.selected img { filter: grayscale(0%); }
+        .oil-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-gold);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-gold);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #bc8a5f; }
+
+        #result-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .next-tool-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #eee;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>THE ORIGIN</h1>
+        <p style="font-size: 14px; color: #888;">Emotion Oil Therapy Beta Test</p>
+    </header>
+
+    <div class="manual-box">
+        <strong>[테스트 취지]</strong><br>
+        나에게 필요한 감정을 승화시켜주는 향을 찾는 과정입니다. 현재 가장 마음이 가는 향(카드)을 2가지 선택해주세요.
+    </div>
+
+    <span class="step-info">STEP 1. 선호 감정 선택</span>
+    
+    <div class="oil-grid">
+        <div class="oil-card" onclick="selectOil(this, '동기부여')">
+            <img src="https://i.ibb.co/XfqM9Yp/15644.jpg" alt="동기부여">
+        </div>
+        <div class="oil-card" onclick="selectOil(this, '편안함')">
+            <img src="https://i.ibb.co/YyYfG7Q/15642.jpg" alt="편안함">
+        </div>
+        <div class="oil-card" onclick="selectOil(this, '위로')">
+            <img src="https://i.ibb.co/f4R9zGz/15641.jpg" alt="위로">
+        </div>
+        <div class="oil-card" onclick="selectOil(this, '용기')">
+            <img src="https://i.ibb.co/qF4jPjR/15643.jpg" alt="용기">
+        </div>
+        <div class="oil-card" onclick="selectOil(this, '용서')">
+            <img src="https://i.ibb.co/zH8Xg2g/15645.jpg" alt="용서">
+        </div>
+        <div class="oil-card" onclick="selectOil(this, '격려')">
+            <img src="https://i.ibb.co/C2C9pWb/15640.jpg" alt="격려">
+        </div>
+    </div>
+
+    <button onclick="generateResult()">베타테스트 분석하기</button>
+
+    <div id="result-section">
+        <h3 style="color: var(--accent-gold); margin-bottom: 10px;">분석 결과</h3>
+        <p id="result-desc" style="line-height: 1.8;"></p>
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+        <p style="font-size: 14px; color: #666;">심화 상담을 위해 아래 도구로 연결이 가능합니다.</p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+            <a href="#" class="next-tool-link">#라이프스케치</a>
+            <a href="#" class="next-tool-link">#소통연구소</a>
+            <a href="#" class="next-tool-link">#하트레시피</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selection = [];
+
+    function selectOil(el, name) {
+        if (selection.includes(name)) {
+            selection = selection.filter(item => item !== name);
+            el.classList.remove('selected');
+        } else {
+            if (selection.length < 2) {
+                selection.push(name);
+                el.classList.add('selected');
+            } else {
+                alert("최대 2가지만 선택 가능합니다.");
+            }
+        }
+    }
+
+    function generateResult() {
+        if (selection.length < 1) {
+            alert("상담을 위해 최소 1개 이상의 카드를 선택해주세요.");
+            return;
+        }
+        
+        const resSection = document.getElementById('result-section');
+        const resDesc = document.getElementById('result-desc');
+        
+        resSection.style.display = 'block';
+        resDesc.innerHTML = `현재 <strong>[${selection.join('와(과) ')}]</strong>의 에너지가 가장 끌리는 상태시네요.<br>이것은 현재 심리적으로 해당 가치가 가장 필요하거나, 혹은 그 가치를 통해 에너지를 얻고 싶어 한다는 신호입니다.`;
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
