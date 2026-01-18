@@ -3,57 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ORIGIN | 신규 향수 수요조사</title>
+    <title>THE ORIGIN | 향수 창업 시연단 모집</title>
     <style>
         :root {
-            --brand-color: #b08d57;
-            --bg-color: #fdfaf6;
-            --card-bg: #ffffff;
-            --text-dark: #333333;
-            --text-gray: #666666;
+            --brand-gold: #b08d57;
+            --bg-panna: #fdfaf6;
+            --white: #ffffff;
+            --text-main: #2c2c2c;
+            --text-sub: #666;
         }
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background-color: var(--bg-panna);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
             line-height: 1.6;
         }
         .container { max-width: 450px; margin: 0 auto; }
         
-        header { text-align: center; padding: 30px 0; }
-        .logo { font-size: 26px; font-weight: 900; letter-spacing: 5px; color: var(--brand-color); margin: 0; }
-        .tagline { font-size: 12px; color: var(--text-gray); margin-top: 5px; font-weight: 500; }
+        header { text-align: center; padding: 25px 0; }
+        .logo { font-size: 26px; font-weight: 900; letter-spacing: 5px; color: var(--brand-gold); margin: 0; }
+        .tagline { font-size: 12px; color: var(--text-sub); margin-top: 5px; letter-spacing: 1px; }
 
-        .card { background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.04); margin-bottom: 20px; }
-        h2 { font-size: 18px; margin-top: 0; color: var(--brand-color); }
-        p { font-size: 14.5px; margin-bottom: 0; word-break: keep-all; }
+        .card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        h2 { font-size: 18px; margin-top: 0; color: var(--brand-gold); border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        p { font-size: 14px; margin-bottom: 0; word-break: keep-all; }
 
-        /* 시향 리스트 */
+        /* 시향 그리드 */
         .scent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .scent-item { 
-            background: #fff; border: 1.5px solid #eee; border-radius: 15px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.2s;
+            background: #fff; border: 1.5px solid #eee; border-radius: 16px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.3s;
         }
-        .scent-item .icon { font-size: 24px; display: block; margin-bottom: 5px; }
+        .scent-item .icon { font-size: 26px; display: block; margin-bottom: 8px; }
         .scent-item .name { font-weight: 700; font-size: 15px; }
-        .scent-item.active { border-color: var(--brand-color); background: #fffcf5; transform: scale(0.97); }
+        .scent-item.active { border-color: var(--brand-gold); background: #fffcf5; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(176,141,87,0.15); }
 
         button { 
-            width: 100%; background: var(--brand-color); color: white; border: none; padding: 18px; border-radius: 15px; 
-            font-size: 16px; font-weight: bold; cursor: pointer;
+            width: 100%; background: var(--brand-gold); color: white; border: none; padding: 18px; border-radius: 15px; 
+            font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        /* 참여 양식 */
-        #registration-form { display: none; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* 분석 결과 섹션 */
+        #result-section { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .form-group { margin-top: 20px; text-align: left; }
-        label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 8px; color: var(--brand-color); }
+        .analysis-text { background: #f9f9f9; padding: 15px; border-radius: 12px; font-size: 14px; margin: 15px 0; border-left: 4px solid var(--brand-gold); }
+        
+        /* 참여 폼 */
+        #registration-form { display: none; }
+        .form-group { margin-top: 15px; }
+        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--brand-gold); }
         input { 
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 15px; margin-bottom: 15px;
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 15px; margin-bottom: 12px;
         }
-        .notice { font-size: 13px; color: #888; background: #f9f9f9; padding: 12px; border-radius: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -61,58 +64,77 @@
 <div class="container">
     <header>
         <p class="logo">THE ORIGIN</p>
-        <p class="tagline">EMOTION PERFUME PROJECT</p>
+        <p class="tagline">NEW EMOTION SCENT PROJECT</p>
     </header>
 
     <div id="survey-step">
         <div class="card">
-            <h2>"창업 준비 시범단 수요조사"</h2>
+            <h2>"창업 준비를 위한 시향 테스트"</h2>
             <p>
-                안녕하세요! 저희는 인간의 20가지 감정을 향기로 구현하는 브랜드 <b>'디 오리진'</b>의 창업 준비팀입니다. <br><br>
-                현재 핵심 감정 6가지를 향수로 시범 제작하였으며, 실제 소비자분들의 선호도를 파악하고 있습니다. 가장 본능적으로 끌리는 향 2가지를 선택해주세요.
+                안녕하세요! 저희는 20가지 감정 중 핵심 6가지를 향으로 구현하는 <b>'디 오리진'</b> 창업팀입니다. <br><br>
+                지금 본능적으로 가장 끌리는 향 2가지를 선택해주세요. 당신의 선택이 저희 브랜드의 첫 번째 향수가 됩니다.
             </p>
         </div>
 
         <div class="scent-grid">
-            <div class="scent-item" onclick="selectScent(this, '동기부여')"><span class="icon">✨</span><span class="name">동기부여</span></div>
-            <div class="scent-item" onclick="selectScent(this, '편안함')"><span class="icon">☁️</span><span class="name">편안함</span></div>
-            <div class="scent-item" onclick="selectScent(this, '위로')"><span class="icon">🌿</span><span class="name">위로</span></div>
-            <div class="scent-item" onclick="selectScent(this, '용기')"><span class="icon">🔥</span><span class="name">용기</span></div>
-            <div class="scent-item" onclick="selectScent(this, '용서')"><span class="icon">🌊</span><span class="name">용서</span></div>
-            <div class="scent-item" onclick="selectScent(this, '격려')"><span class="icon">👍</span><span class="name">격려</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '동기부여')"><span class="icon">✨</span><span class="name">동기부여</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '편안함')"><span class="icon">☁️</span><span class="name">편안함</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '위로')"><span class="icon">🌿</span><span class="name">위로</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '용기')"><span class="icon">🔥</span><span class="name">용기</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '용서')"><span class="icon">🌊</span><span class="name">용서</span></div>
+            <div class="scent-item" onclick="toggleSelect(this, '격려')"><span class="icon">👍</span><span class="name">격려</span></div>
         </div>
 
-        <button onclick="goToForm()">수요조사 참여 완료</button>
+        <button onclick="showAnalysis()">데이터 분석하기</button>
+    </div>
+
+    <div id="result-section">
+        <div class="card">
+            <h2 id="analysis-title">선택 감정 분석 결과</h2>
+            <div class="analysis-text" id="analysis-content"></div>
+            <p style="margin-bottom: 15px; font-weight: 500;">
+                이 향기들은 당신의 무의식이 현재 가장 채우고 싶어 하는 '심리적 보상'을 의미합니다. 
+                저희는 이 데이터를 바탕으로 실제 제품을 정교화하고 있습니다.
+            </p>
+            <button onclick="goToForm()" style="background: #333;">✨ 정식 향수체험 참여하기</button>
+        </div>
     </div>
 
     <div id="registration-form">
         <div class="card">
-            <h2>"향수 시연단 추가 모집"</h2>
-            <p>참여해주셔서 감사합니다! 선택하신 향은 추후 창업 시 제품 개발에 귀중한 자료가 됩니다.</p>
-            <p style="margin-top:10px;">혹시 나중에 저희가 정식으로 향수 시연회를 가질 때, <b>시연단으로 참여가 가능하신가요?</b></p>
+            <h2>"정식 향수 시연회 참여 신청"</h2>
+            <p>선택하신 향의 배합이 정식 제품으로 출시될 때, 가장 먼저 체험하실 수 있도록 초대해 드립니다.</p>
             
             <div class="form-group">
                 <label>성함</label>
-                <input type="text" placeholder="성함을 입력해주세요">
+                <input type="text" id="userName" placeholder="성함을 입력해주세요">
                 
                 <label>연락처</label>
-                <input type="tel" placeholder="010-0000-0000">
+                <input type="tel" id="userTel" placeholder="010-0000-0000">
 
-                <label>시연 참여 가능 시간 (예: 평일 저녁, 주말 등)</label>
-                <input type="text" placeholder="가능하신 요일이나 시간대">
+                <label>시연 참여 가능 날짜/시간</label>
+                <input type="text" id="userTime" placeholder="예: 토요일 오후, 평일 저녁 등">
             </div>
 
-            <button onclick="finish()">시연단 신청하기</button>
-            <div class="notice">
-                * 입력하신 정보는 시연회 일정 안내 목적으로만 사용되며 소중히 관리됩니다.
-            </div>
+            <button onclick="complete()">신청 완료하기</button>
         </div>
     </div>
 </div>
 
 <script>
     let selected = [];
-    function selectScent(el, name) {
+    
+    // 감정별 분석 데이터베이스
+    const analysisData = {
+        '동기부여': '현재 새로운 변화나 성장을 갈망하고 있음을 뜻합니다.',
+        '편안함': '일상의 긴장을 해소하고 정서적 안정이 필요한 상태임을 뜻합니다.',
+        '위로': '지친 마음을 보듬고 공감을 통해 에너지를 얻고 싶어 함을 뜻합니다.',
+        '용기': '직면한 문제를 돌파하고자 하는 내면의 의지가 깨어나고 있음을 뜻합니다.',
+        '용서': '과거의 매듭을 풀고 마음의 평화를 찾고자 하는 단계임을 뜻합니다.',
+        '격려': '나 자신에 대한 확신과 누군가의 지지가 동력이 되는 시기임을 뜻합니다.'
+    };
+
+    function toggleSelect(el, name) {
         if (selected.includes(name)) {
             selected = selected.filter(i => i !== name);
             el.classList.remove('active');
@@ -120,19 +142,36 @@
             if (selected.length < 2) {
                 selected.push(name);
                 el.classList.add('active');
-            } else { alert("최대 2개만 선택 가능합니다."); }
+            } else { alert("가장 끌리는 향 2가지만 선택해주세요!"); }
         }
     }
 
-    function goToForm() {
-        if (selected.length === 0) { alert("시향하신 향을 선택해주세요."); return; }
+    function showAnalysis() {
+        if (selected.length !== 2) { alert("상세 분석을 위해 향 2가지를 선택해주세요."); return; }
+        
         document.getElementById('survey-step').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        
+        const content = document.getElementById('analysis-content');
+        content.innerHTML = `<strong>[${selected[0]}]</strong>와 <strong>[${selected[1]}]</strong>의 조합:<br><br>` +
+            `1. ${selected[0]}: ${analysisData[selected[0]]}<br>` +
+            `2. ${selected[1]}: ${analysisData[selected[1]]}<br><br>` +
+            `이 두 가지 향이 동시에 끌리는 이유는 현재 당신의 마음이 <b>안정과 도약 사이의 균형</b>을 찾고 있기 때문입니다. 
+            저희 '디 오리진'은 이 복합적인 감정을 조화롭게 섞어 당신만을 위한 향수로 제작할 예정입니다.`;
+        
+        window.scrollTo(0,0);
+    }
+
+    function goToForm() {
+        document.getElementById('result-section').style.display = 'none';
         document.getElementById('registration-form').style.display = 'block';
         window.scrollTo(0,0);
     }
 
-    function finish() {
-        alert("시연단 신청이 완료되었습니다. 창업 준비에 큰 힘이 되어주셔서 감사합니다!");
+    function complete() {
+        const name = document.getElementById('userName').value;
+        if(!name) { alert("정보를 입력해주세요."); return; }
+        alert(`${name}님, 시연단 신청이 완료되었습니다. 창업 시범 테스트에 참여해주셔서 감사합니다!`);
         location.reload();
     }
 </script>
