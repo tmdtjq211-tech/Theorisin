@@ -60,7 +60,7 @@
     <div id="survey-step">
         <div class="card">
             <h2>"창업 준비를 위한 시향 테스트"</h2>
-            <p>안녕하세요! 저희는 인간의 감정을 향으로 구현하는 <b>'디 오리진'</b> 창업팀입니다. <br><br>지금 본능적으로 가장 끌리는 향을 <b>1~2개</b> 선택해주세요.</p>
+            <p>인간의 핵심 감정을 향기로 구현하는 창업팀 <b>'디 오리진'</b>입니다. <br><br>지금 본능적으로 가장 끌리는 향을 <b>1~2개</b> 선택해주세요.</p>
         </div>
         <div class="scent-grid">
             <div class="scent-item" onclick="toggleSelect(this, '동기부여')"><span class="icon">✨</span><span class="name">동기부여</span></div>
@@ -75,21 +75,21 @@
 
     <div id="result-section">
         <div class="card">
-            <h2>선택 감정 분석 결과</h2>
+            <h2>선택 감정 심층 분석</h2>
             <div class="analysis-text" id="analysis-content"></div>
-            <p style="margin-bottom: 15px; font-weight: 500;">저희는 이 데이터를 바탕으로 실제 제품을 정교화하고 있습니다.</p>
-            <button onclick="goToForm()" style="background: #333;">✨ 정식 향수체험 참여하기</button>
+            <p style="margin-bottom: 15px; font-weight: 500; color: #b08d57;">※ 당신의 선택은 향후 정식 제품 조향의 핵심 데이터가 됩니다.</p>
+            <button onclick="goToForm()" style="background: #333;">✨ 정식 향수체험 시연단 참여</button>
         </div>
     </div>
 
     <div id="registration-form">
         <div class="card">
-            <h2>"정식 향수 시연회 참여 신청"</h2>
-            <p>선택하신 향이 제품으로 출시될 때, 가장 먼저 체험하실 수 있도록 초대해 드립니다.</p>
+            <h2>"시연회 초대권 신청"</h2>
+            <p>선택하신 향이 제품으로 구현될 때 가장 먼저 초대해 드립니다.</p>
             <div class="form-group">
                 <label>성함</label><input type="text" id="userName" placeholder="성함을 입력해주세요">
                 <label>연락처</label><input type="tel" id="userTel" placeholder="010-0000-0000">
-                <label>시연 참여 가능 날짜/시간</label><input type="text" id="userTime" placeholder="예: 토요일 오후, 평일 저녁 등">
+                <label>참여 가능 시간대</label><input type="text" id="userTime" placeholder="예: 주말 오후, 평일 저녁 등">
             </div>
             <button onclick="complete()">신청 완료하기</button>
         </div>
@@ -98,14 +98,39 @@
 
 <script>
     let selected = [];
+    
+    // 개별 분석 데이터
     const analysisData = {
-        '동기부여': '현재 새로운 변화나 성장을 갈망하고 있음을 뜻합니다.',
-        '편안함': '일상의 긴장을 해소하고 정서적 안정이 필요한 상태임을 뜻합니다.',
-        '위로': '지친 마음을 보듬고 공감을 통해 에너지를 얻고 싶어 함을 뜻합니다.',
-        '용기': '직면한 문제를 돌파하고자 하는 내면의 의지가 깨어나고 있음을 뜻합니다.',
-        '용서': '과거의 매듭을 풀고 마음의 평화를 찾고자 하는 단계임을 뜻합니다.',
-        '격려': '나 자신에 대한 확신과 누군가의 지지가 동력이 되는 시기임을 뜻합니다.'
+        '동기부여': '새로운 변화와 성장을 향한 열망이 깨어나고 있습니다.',
+        '편안함': '지친 일상에서 벗어나 정서적 안식처가 필요한 시기입니다.',
+        '위로': '따뜻한 공감을 통해 마음의 응어리를 해소하고 싶어 합니다.',
+        '용기': '어려움을 돌파하려는 강력한 내면의 의지가 집중되어 있습니다.',
+        '용서': '복잡한 감정을 정리하고 마음의 평화를 되찾는 과정에 있습니다.',
+        '격려': '자신에 대한 확신과 든든한 지지 에너지를 갈구하고 있습니다.'
     };
+
+    // 조합별 맞춤 분석 데이터 (사전 정의)
+    function getComboMessage(oils) {
+        const combo = oils.sort().join(',');
+        const messages = {
+            '동기부여,편안함': '지속 가능한 성장을 위해 "휴식"과 "열정" 사이의 완벽한 밸런스를 찾고 계시군요.',
+            '동기부여,위로': '다시 일어서기 위해 먼저 마음을 다독이는 "회복탄력성"이 필요한 상태입니다.',
+            '동기부여,용기': '목표를 향해 거침없이 나아갈 준비가 된 "강력한 실천력"의 조화입니다.',
+            '동기부여,용서': '과거의 매듭을 풀고 새로운 미래로 나아가려는 "자유로운 도약"을 뜻합니다.',
+            '동기부여,격려': '나에 대한 믿음을 바탕으로 성취를 이루려는 "확신에 찬 도전"을 의미합니다.',
+            '편안함,위로': '현재 가장 깊은 정서적 휴식이 필요한 상태로, 나를 "보듬어주는 에너지"가 끌리고 있습니다.',
+            '편안함,용기': '평온함 속에서 결단력을 얻으려는 "외유내강"의 심리 상태를 반영합니다.',
+            '편안함,용서': '긴장을 내려놓고 마음을 비워내려는 "완전한 평화"의 추구입니다.',
+            '편안함,격려': '안정된 기반 위에서 자신감을 회복하고 싶은 "내면의 재충전" 시기입니다.',
+            '위로,용기': '상처를 딛고 일어나 더 강해지려는 "치유와 용기"의 성숙한 조합입니다.',
+            '위로,용서': '슬픔을 비워내고 화해를 통해 "감정의 정화"를 이루려는 단계입니다.',
+            '위로,격려': '타인의 공감과 자신의 지지를 통해 "자존감"을 높이고 싶은 상태입니다.',
+            '용기,용서': '어려운 화해를 선택하거나 과거를 놓아주는 "대범한 결단"의 시기입니다.',
+            '용기,격려': '어떤 장애물도 넘을 수 있다는 "무한한 가능성"의 에너지가 집중되었습니다.',
+            '용서,격려': '모든 매듭을 풀고 새롭게 자신을 사랑하려는 "자아의 회복"을 의미합니다.'
+        };
+        return messages[combo] || '두 감정의 조화를 통해 새로운 내면의 힘을 발견하는 과정입니다.';
+    }
 
     function toggleSelect(el, name) {
         if (selected.includes(name)) {
@@ -121,24 +146,23 @@
 
     function showAnalysis() {
         if (selected.length === 0) { alert("상세 분석을 위해 향을 최소 1개 선택해주세요."); return; }
-        
         document.getElementById('survey-step').style.display = 'none';
         document.getElementById('result-section').style.display = 'block';
         
         const content = document.getElementById('analysis-content');
-        let analysisResult = `<strong>[${selected.join(', ')}]</strong> 선택 결과:<br><br>`;
+        let html = `<strong>[${selected.join(' & ')}]</strong> 선택 결과:<br><br>`;
         
-        selected.forEach((item, index) => {
-            analysisResult += `${index + 1}. ${item}: ${analysisData[item]}<br>`;
+        selected.forEach((item) => {
+            html += `• ${item}: ${analysisData[item]}<br>`;
         });
 
-        if (selected.length === 1) {
-            analysisResult += `<br>선택하신 한 가지 감정에 집중된 에너지는 현재 당신에게 <b>가장 절실한 핵심 가치</b>임을 나타냅니다.`;
+        if (selected.length === 2) {
+            html += `<br><strong>💡 조합 분석:</strong><br>${getComboMessage(selected)}`;
         } else {
-            analysisResult += `<br>이 두 가지 향이 동시에 끌리는 이유는 현재 당신의 마음이 <b>안정과 도약 사이의 조화로운 균형</b>을 찾고 있기 때문입니다.`;
+            html += `<br><strong>💡 단독 분석:</strong><br>선택하신 한 가지 감정은 현재 당신의 무의식을 지배하는 가장 핵심적인 심리 키워드입니다.`;
         }
         
-        content.innerHTML = analysisResult;
+        content.innerHTML = html;
         window.scrollTo(0,0);
     }
 
@@ -150,8 +174,8 @@
 
     function complete() {
         const name = document.getElementById('userName').value;
-        if(!name) { alert("정보를 입력해주세요."); return; }
-        alert(`${name}님, 시연단 신청이 완료되었습니다. 창업 준비에 참여해주셔서 감사합니다!`);
+        if(!name) { alert("성함을 입력해주세요."); return; }
+        alert(`${name}님, 시연단 신청이 완료되었습니다. 창업 준비에 큰 힘이 되어주셔서 감사합니다!`);
         location.reload();
     }
 </script>
